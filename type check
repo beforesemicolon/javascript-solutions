@@ -10,8 +10,11 @@ const isOfType = (() => {
   // check for strings and string literal type. e.g: 's', "s", new String()
   type.string = x => !type.nil(x) && (typeof x === 'string' || x instanceof String);
   // check for number or number literal type. e.g: 12, 30.5, new Number()
-  type.number = x => !type.nil(x) && 
-    ((!isNaN(x) && isFinite(x) && typeof x === 'number') || x instanceof Number);
+  type.number = x => !type.nil(x) 
+    && ((!isNaN(x) // NaN is type of "number" and this excludes that
+         && isFinite(x) // Infinity is type of "number" and this excludes that
+         && typeof x === 'number') || 
+        x instanceof Number);
   // check for boolean or boolean literal type. e.g: true, false, new Boolean()
   type.boolean = x => !type.nil(x) && (typeof x === 'boolean' || x instanceof Boolean);
   // check for array type
