@@ -3,5 +3,5 @@ function randomNumber(max = 1, min = 0) {
     return max;
   }
   
-  return Math.floor(Math.random() * Math.floor((max - min)) + min);
+  return Math.floor(Math.random() * (max - min) + min);
 }
