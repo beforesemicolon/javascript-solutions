@@ -1,0 +1,29 @@
+function promisify(subject) {
+  return (...args) => new Promise(async (resolve, reject) => {
+    const callbackHandler = (...results) => {
+      // filter error from results to remove dependency on error, result order
+      const {error, result} = results.reduce((obj, res) => {
+        if(res instanceof Error) {
+          obj['error'] = res;
+        } else {
+          obj['result'] = res;
+        }
+        
+        return obj;
+      }, {});
+      
+      if(error) {
+        reject(error);
+      } else {
+        resolve(result);
+      }
+    }
+
+    try {
+      const result = await subject(...args, callbackHandler);
+      resolve(result); // only runs if callbackHandler does not resolve the promise 
+    } catch(error) {
+      reject(error);
+    }
+  });
+}
