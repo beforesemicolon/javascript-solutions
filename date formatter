@@ -1,0 +1,23 @@
+function formatDate(date, formatStr = "MMMM DD, YYYY", lang = 'default') {
+  date = new Date(date);
+  
+  const day = date.toLocaleString(lang, { weekday: "long" });
+  const month = date.toLocaleString(lang, { month: "long" });
+  const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+  const pastDaysOfYear = (date - firstDayOfYear) / 86400000; // one day;
+  const week = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+
+  return formatStr
+      .replace(/\bYYYY\b/g, date.getFullYear())
+      .replace(/\bYY\b/g, `${date.getFullYear()}`.substring(2))
+      .replace(/\bWW\b/g, week.toString().padStart(2, "0"))
+      .replace(/\bW\b/g, week)
+      .replace(/\bDDDD\b/g, day)
+      .replace(/\bDDD\b/g, day.substring(0, 3))
+      .replace(/\bDD\b/g, date.getDate().toString().padStart(2, "0"))
+      .replace(/\bD\b/g, date.getDate())
+      .replace(/\bMMMM\b/g, month)
+      .replace(/\bMMM\b/g, month.substring(0, 3))
+      .replace(/\bMM\b/g, (date.getMonth() + 1).toString().padStart(2, "0"))
+      .replace(/\bM\b/g, date.getMonth() + 1);
+}
