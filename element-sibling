@@ -1,0 +1,40 @@
+function element(selectorOrElement) {
+  const element = selectorOrElement instanceof Element 
+    ? selectorOrElement
+    : document.body.querySelector(selectorOrElement);
+  
+  return {
+    get self() {
+      return element;
+    },
+    get nextElement() {
+      return element.nextElementSibling;
+    },
+    get prevElement() {
+      return element.previousElementSibling;
+    },
+    get siblings() {
+      return [...element.parentNode.children].filter(el => el !== element);
+    },
+    get nextSiblings() {
+      const siblings = [];
+      let nextElement = element.nextElementSibling;
+      
+      while(nextElement) {
+        siblings.push(nextElement);
+        nextElement = nextElement.nextElementSibling
+      }
+      
+      return siblings;
+    },
+    get previousSiblings() {
+      const siblings = [];
+      [...element.parentNode.children].some(el => {
+        if(el !== element)siblings.push(el);
+        return el === element;
+      });
+      
+      return siblings;
+    }
+  }
+}
