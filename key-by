@@ -1,0 +1,9 @@
+function keyBy(obj, key) {
+  const values = obj instanceof Map
+    ? Array.from(obj.values())
+    : Object.values(obj);
+  
+  return values.reduce((keyedObj, value) => (
+    {...keyedObj, [value[key]]: value}
+  ), {});
+}
