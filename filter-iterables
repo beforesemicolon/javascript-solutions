@@ -1,0 +1,16 @@
+// uses the forEach from this directory
+
+function filter(list, callback) {
+  const newList = [];
+  
+  return (() => {
+    forEach(list, (...args) => {
+      const res = callback(...args);
+      if(Boolean(res)) {
+        newList.push(args[0]);
+      }
+    })
+    
+    return newList;
+  })()
+}
