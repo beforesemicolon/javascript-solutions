@@ -1,0 +1,13 @@
+// use the forEach from this directory
+
+function map(list, callback) {
+  const newList = [];
+  
+  return (() => {
+    forEach(list, (...args) => {
+      newList.push(callback(...args));
+    })
+    
+    return newList;
+  })()
+}
