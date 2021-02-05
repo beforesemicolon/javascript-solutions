@@ -1,0 +1,1 @@
+const average = (nList) => (nList.reduce((avg, n) => avg + n, 0)) / nList.length;
