@@ -1,0 +1,7 @@
+class AbstractClass {
+  constructor() {
+    if(this.constructor.name === 'AbstractClass') {
+      throw new Error('"AbstractClass" is an Abstract Class. It can only be extended')
+    }
+  }
+}
