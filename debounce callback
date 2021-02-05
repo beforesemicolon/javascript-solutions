@@ -1,0 +1,10 @@
+function debounce(duration = 0, cb) {
+  let timer = null;
+
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      cb(...args);
+    }, duration);
+  };
+}
