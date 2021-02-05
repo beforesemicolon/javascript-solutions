@@ -1,2 +1,2 @@
 # javascript-solutions
-Several code solution, tips and trick in Javascript
+Several code solution snippets in Javascript
