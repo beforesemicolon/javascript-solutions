@@ -1,0 +1,79 @@
+function isEqualFunctions(fn1, fn2) {
+  if(fn1 === fn2) return true;
+  
+  return typeof fn1 === 'function' 
+    && typeof fn2 === 'function' 
+    && fn1.toString() === fn2.toString();
+}
+
+function isEqualSymbols(symb1, symb2) {
+  if(symb1 === symb2) return true;
+  
+  return typeof symb1 === 'symbol' 
+    && typeof symb2 === 'symbol' 
+    && symb1.toString() === symb2.toString();
+}
+
+function isEqualMap(map1, map2) {
+  if(map1 === map2) return true;
+  
+  if(
+    !(map1 instanceof Map) 
+    || !(map2 instanceof Map)
+    || map1.size !== map2.size
+  ) return false
+  
+  const keys1 = Array.from(map1.keys());
+  const keys2 = Array.from(map2.keys());
+  const values1 = Array.from(map1.values());
+  const values2 = Array.from(map2.values());
+  
+  return keys1.every((k, i) => isEqual(k, keys2[i]))
+    && values1.every((v, i) => isEqual(v, values2[i]))
+}
+
+function isEqualSet(set1, set2) {
+  if(set1 === set2) return true;
+  
+  if(
+    !(set1 instanceof Set) 
+    || !(set2 instanceof Set)
+    || set1.size !== set2.size
+  ) return false;
+  
+  const values1 = Array.from(set1.values());
+  const values2 = Array.from(set2.values());
+  
+  return values1.every((v, i) => isEqual(v, values2[i]))
+}
+
+function isEqual(a, b) {
+  // handles primitives and same instances
+  if(a === b) return true;
+  
+  switch(`${typeof a}:${typeof b}`) {
+    case 'symbol:symbol':
+      return isEqualSymbols(a, b);
+    case 'function:function':
+      return isEqualFunctions(a, b);
+    case 'object:object':
+      // inner cases for objects other than Array and Object
+      if(a instanceof Map) return isEqualMap(a, b);
+      if(a instanceof Set) return isEqualSet(a, b);
+      
+      // handles Object and Array
+      const keysA = Object.keys(a);
+      const keysB = Object.keys(b);
+
+      if (keysA.length != keysB.length) return false;
+      
+      for (let key of keysA) {
+        if (!keysB.includes(key) || !isEqual(a[key], b[key])) return false;
+      }
+      
+      return true;
+    default:
+      // handles when a and b is of different types
+      return false;
+  }
+}
