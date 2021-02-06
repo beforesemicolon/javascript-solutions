@@ -1,0 +1,8 @@
+function once(callback) {
+  const handler = (e) => {
+    e.currentTarget.removeEventListener(e.type, handler);
+    callback(e);
+  };
+
+  return handler;
+}
