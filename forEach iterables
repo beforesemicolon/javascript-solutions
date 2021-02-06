@@ -1,4 +1,6 @@
 function forEach(list, callback) {
+  if(!list || typeof list !== 'object') return;
+  
   const entries = list instanceof Map || list instanceof Set
     ? Array.from(list.entries())
     : list instanceof Iterator 
