@@ -1,5 +1,5 @@
 function forEach(list, callback) {
-  const entries = list instanceof Map
+  const entries = list instanceof Map || list instanceof Set
     ? Array.from(list.entries())
     : Object.entries(list);
   
