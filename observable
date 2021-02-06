@@ -1,0 +1,39 @@
+function Observer(onNext, onError = () => {}, onComplete = () => {}) {
+  const def = () => {};
+  if (typeof onNext === 'object') {
+    onError = onNext.error || def;
+    onComplete = onNext.complete || def;
+    onNext = onNext.next || def;
+  }
+  this.completed = false;
+  this.withError = false;
+  this.next = (val) => {
+    if (!this.completed) onNext(val);
+  };
+  this.error = (err) => {
+    if (!this.completed) {
+      this.completed = true;
+      this.withError = true;
+      onError(err);
+    }
+  };
+  this.complete = () => {
+    if (!this.completed) {
+      this.completed = true;
+      onComplete();
+    }
+  };
+}
+
+function Observable(observer) {
+  this.subscribe = (...fns) => {
+    if(observer) {
+      const obs = new Observer(...fns);
+      observer(obs);
+    }
+  };
+  
+  this.unsubscribe = () => {
+    observer = null;
+  }
+}
