@@ -1,19 +1,11 @@
 // use the forEach from this directory
 
 function map(list, callback) {
-  if(!list.constructor) return null;
-  
-  const newList = new list.constructor();
-  const isMap = newList instanceof Map;
+  const newList = [];
   
   return (() => {
     forEach(list, (item, key) => {
-      const res = callback(item, key, list);
-      if(isMap) {
-        newList.set(key, res);
-      } else {
-        newList[key] = res
-      }
+      newList.push(callback(item, key, list))
     })
     
     return newList;
