@@ -1,13 +1,5 @@
-// use the forEach from this directory
-
 function map(list, callback) {
-  const newList = [];
-  
-  return (() => {
-    forEach(list, (item, key) => {
-      newList.push(callback(item, key, list))
-    })
-    
-    return newList;
-  })()
+  list = ({}).toString.call(list) === '[object Object]'
+    ? Object.values(list) : list;
+  return Array.from(list, callback)
 }
