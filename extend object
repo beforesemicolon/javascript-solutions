@@ -4,10 +4,10 @@ function extendObject(element) {
   
   return {
     obj: element,
-    setValue(key, value) {
+    set(key, value) {
       if(this.obj) extended.get(this.obj)[key] = value;
     },
-    getValue(key) {
+    get(key) {
       return this.obj ? extended.get(this.obj)[key] : null;
     },
     reflect(key, value = null) {
