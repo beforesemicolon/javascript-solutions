@@ -9,6 +9,15 @@ function extendObject(element) {
     },
     getValue(key) {
       return this.obj ? extended.get(this.obj)[key] : null;
+    },
+    reflect(key, value = null) {
+      if(!this.obj) return;
+      
+      if(value === null) {
+        return this.obj[key];
+      } else {
+        this.obj[key] = value;
+      }
     }
   }
 }
