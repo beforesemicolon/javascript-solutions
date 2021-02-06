@@ -1,0 +1,11 @@
+function until(callback, checker) {
+  const handler = (e) => {
+    if(checker(e)) {
+      e.currentTarget.removeEventListener(e.type, handler);
+    }
+    
+    callback(e);
+  };
+
+  return handler;
+}
