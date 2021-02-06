@@ -1,0 +1,14 @@
+function extendObject(element) {
+  const extended = new WeakMap();
+  extended.set(element, {});
+  
+  return {
+    obj: element,
+    setValue(key, value) {
+      if(this.obj) extended.get(this.obj)[key] = value;
+    },
+    getValue(key) {
+      return this.obj ? extended.get(this.obj)[key] : null;
+    }
+  }
+}
