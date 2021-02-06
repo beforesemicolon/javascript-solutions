@@ -1,0 +1,16 @@
+function groupBy(obj, key) {
+  const values = obj instanceof Map || obj instanceof Set
+    ? Array.from(obj.values())
+    : Object.values(obj);
+  
+  return values.reduce((keyedObj, value) => {
+    const groupKey = value[key];
+    if(!Array.isArray(keyedObj[groupKey])) {
+      keyedObj[groupKey] = [value];
+    } else {
+      keyedObj[groupKey].push(value);
+    }
+    
+    return keyedObj;
+  }, {});
+}
