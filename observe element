@@ -1,0 +1,32 @@
+function observeElement(element, callback) {
+  const config = {
+    attributes: true,
+    childList: true,
+    subtree: true,
+    attributeOldValue: true,
+  };
+
+  const listener = function (mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      let type = mutation.type === 'childList' ? 'content' : mutation.type;
+      let oldValue = mutation.oldValue;
+      let newValue = null;
+
+      if (mutation.type === 'childList') {
+        newValue = [...mutation.target.childNodes].map((node) => {
+          return node.nodeName === '#text' ? node.nodeValue : node;
+        });
+      } else if (mutation.type === 'attributes') {
+        newValue = mutation.target.getAttribute(mutation.attributeName)
+      }
+      
+      callback({type, oldValue, newValue});
+    }
+  };
+
+  const observer = new MutationObserver(listener);
+
+  observer.observe(element, config);
+
+  return () => observer.disconnect();
+}
