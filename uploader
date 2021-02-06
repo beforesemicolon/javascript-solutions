@@ -1,0 +1,48 @@
+function postData(
+  url, 
+  data = {}, 
+  {type = 'json', fileKey = 'file', headers = [], onProgress} = {}
+) {
+    const req = new XMLHttpRequest();
+    const formData = new FormData();
+  
+    req.open('POST', url, true);
+
+    if(data instanceof File) {
+      formData.append(fileKey, data, data.name);
+      data = formData;
+    } else if(type === 'multipart') {
+      for(const key in data) {
+        formData.append(key, data[key]);
+      }
+      data = formData;
+    } else {
+      data = JSON.stringify(data);
+      req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    }
+  
+    for(const key in headers) {
+      req.setRequestHeader(key, headers[key]);
+    }
+
+    return new Promise((res, rej) => {
+      req.onload = (e) => {
+        if (req.status === 200) {
+          res(e);
+        } else {
+          rej(e);
+        }
+      }
+      
+      if(typeof onProgress === 'function') {
+        req.upload.onprogress = onProgress;
+      }
+      
+      req.onerror = rej;
+      req.onabort = rej;
+      req.onabort = rej;
+      req.ontimeout = rej;
+
+      req.send(data);
+    });
+}
