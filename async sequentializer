@@ -24,6 +24,6 @@ const asyncSequentializer = (() => {
         });
       }, toPromise(list.shift()))
       // collect the final result and return the array of results as resolved promise
-      .then(res => Promise.resolve([...results, res]));
+      .then(res => [...results, res]);
   }
 })();
