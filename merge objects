@@ -1,6 +1,6 @@
 function mergeObjects(a, b) {
-  if(a === null || a === undefined || typeof a !== 'object') return b ?? {};
-  if(b === null || b === undefined) return a ?? {};
+  if(a === null || typeof a !== 'object') return b ?? {};
+  if(b === null || typeof b !== 'object') return a ?? {};
   
   const obj = Array.isArray(a) ? [...a] : a;
   
