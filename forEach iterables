@@ -10,7 +10,7 @@ function forEach(list, callback) {
   let index = 0;
   for(const item of entries) {
     let res = false;
-    if(item.length) {
+    if(Array.isArray(item)) {
       res = callback(item[1], item[0] || index++, list);
     } else {
       res = callback(item, index++, list);
