@@ -11,3 +11,20 @@ function createFixedSizeArray(...items) {
   
   return array;
 }
+
+// or
+class FixedArray {
+  constructor(...items) {
+    let array = [];
+  
+    if (items.length === 1) {
+      array = (new Array(items[0])).fill(undefined);
+    } else {
+      items.forEach((item, index) => array[index] = item)
+    }
+
+    Object.seal(array);
+
+    return array;
+  }
+}
