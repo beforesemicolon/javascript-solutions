@@ -4,7 +4,7 @@ function createFixedSizeArray(...items) {
   if (items.length === 1) {
     array = (new Array(items[0])).fill(undefined);
   } else {
-    items.forEach((item, index) => array[index] = item)
+    array = items.slice(0)
   }
   
   Object.seal(array);
@@ -20,7 +20,7 @@ class FixedArray {
     if (items.length === 1) {
       array = (new Array(items[0])).fill(undefined);
     } else {
-      items.forEach((item, index) => array[index] = item)
+      array = items.slice(0)
     }
 
     Object.seal(array);
