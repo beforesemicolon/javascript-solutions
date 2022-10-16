@@ -1,13 +1,21 @@
-const deepClone = obj => {
+const deepCloneObj = obj => {
   let clone = obj;
+  
   if (obj && typeof obj === "object") {
     clone = obj.constructor 
        ? new obj.constructor() 
        : Object.create(null);
     
-    Object.getOwnPropertyNames(obj).forEach(
-      prop => (clone[prop] = deepClone(obj[prop]))
-    );
+    switch(true) {
+      case obj instanceof Map:
+        obj.forEach((v, k) => clone.set(k, deepCloneObj(v)))
+        break;
+      case obj instanceof Set:
+        obj.forEach((v) => clone.add(deepCloneObj(v)))
+        break;
+      default: 
+        Object.getOwnPropertyNames(obj).forEach(
+          prop => (clone[prop] = deepCloneObj(obj[prop]))
+        );
+    }
   }
-  return clone;
-};
